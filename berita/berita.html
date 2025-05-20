@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MamiOlahraga - Portal Berita Olahraga</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            background-color: maroon;
+            color: var(--white);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+            position: relative;
+            color: white;
+        }
+
+        .nav-link {
+        font-weight: 600;
+        padding: 10px 0;
+        transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+        color: #ffcccb;
+        }
+
+        .nav-link.active {
+        color: #ffcccb;
+        border-bottom: 2px solid #ffcccb;
+        }
+
+
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        
+
+        .dropdown-menu li {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            list-style: none;
+            color: black;
+        }
+
+        .dropdown-menu li a {
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-menu li a:hover {
+            color: maroon;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .auth .btn-register {
+            background-color: white;
+            color: maroon;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .auth .btn-register:hover {
+            background-color: #ffcccb;
+            color: var(--maroon);
+        }
+
+        .profile-icon {
+            font-size: 20px;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            color: #ffcccb;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        /* Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .news-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .news-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-category {
+            display: inline-block;
+            background: #e60000;
+            color: #fff;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .news-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .news-content {
+            padding: 15px;
+        }
+        
+        .news-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .news-excerpt {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .news-meta {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .highlight-news {
+            grid-column: span 2;
+            display: flex;
+        }
+        
+        .highlight-news .news-image {
+            width: 50%;
+            height: auto;
+        }
+        
+        .highlight-news .news-content {
+            width: 50%;
+            padding: 20px;
+        }
+        
+        .highlight-news .news-title {
+            font-size: 24px;
+        }
+        
+        .ad-banner {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e60000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title a {
+            font-size: 14px;
+            font-weight: normal;
+            color: #e60000;
+        }
+        
+        /* Footer */
+        /* Footer Styles */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-logo {
+    margin-bottom: 30px;
+}
+
+.footer-logo a {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.footer-logo p {
+    color: #aaa;
+    max-width: 400px;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: white;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: maroon;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: white;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: maroon;
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+    font-size: 14px;
+}
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .news-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-news {
+                grid-column: span 1;
+                flex-direction: column;
+            }
+            
+            .highlight-news .news-image,
+            .highlight-news .news-content {
+                width: 100%;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <a href="#">MamiOlahraga</a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/PROJECTLEC/home/home.html">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Olahraga </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Sepakbola</a></li>
+                        <li><a href="#">Basket</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link" class="nav-link active">Berita</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Toko</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Komunitas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">About Us</a></li>
+            </ul>
+            <div class="auth">
+                <a href="/PROJECTLEC/register/register.html" class="btn-register">Register</a>
+                <!-- Will be replaced with profile icon after login -->
+                <!-- <a href="#" class="profile-icon"><i class="fas fa-user"></i></a> -->
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="news-section">
+            <div class="news-card highlight-news">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/600x400/cccccc/333333?text=Gado-gado+Jakarta');"></div>
+                <div class="news-content">
+                    <span class="news-category">detikFood</span>
+                    <h2 class="news-title">5 Gado-gado Legendaris di Jakarta yang Miekoh Curih Bumbunya</h2>
+                    <p class="news-excerpt">Temukan gado-gado terenak di Jakarta dengan bumbu kacang yang menggoda selera.</p>
+                    <div class="news-meta">2 jam yang lalu</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Sri+Mulyani');"></div>
+                <div class="news-content">
+                    <span class="news-category">detikFinance</span>
+                    <h2 class="news-title">Sri Mulyani Bawa Kabar Buruk: RI Harus Hati-hati</h2>
+                    <p class="news-excerpt">Menteri Keuangan memberikan peringatan penting tentang kondisi ekonomi nasional.</p>
+                    <div class="news-meta">3 jam yang lalu</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Pemain+Bola');"></div>
+                <div class="news-content">
+                    <span class="news-category">Sepakbola</span>
+                    <h2 class="news-title">Selesai sudah Karier Manusia 100 Juta Pounds ini di Man City</h2>
+                    <p class="news-excerpt">Pemain bintang ini dipastikan hengkang dari Etihad Stadium musim depan.</p>
+                    <div class="news-meta">1 jam yang lalu</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Badminton');"></div>
+                <div class="news-content">
+                    <span class="news-category">JADWAL BADMINTON</span>
+                    <h2 class="news-title">Jadwal Lengkap Turnamen Bulutangkis Asia Tenggara</h2>
+                    <p class="news-excerpt">Simak jadwal pertandingan bulutangkis SEA Games mendatang.</p>
+                    <div class="news-meta">5 jam yang lalu</div>
+                    <a href="#" style="color: #e60000; font-weight: bold; display: inline-block; margin-top: 10px;">Selengkapnya →</a>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Kesehatan');"></div>
+                <div class="news-content">
+                    <span class="news-category">Iklan</span>
+                    <h2 class="news-title">Warga Jakarta, hentikan sakit lutut dengan cara ini!</h2>
+                    <p class="news-excerpt">Temukan solusi alami untuk masalah persendian yang mengganggu aktivitas Anda.</p>
+                    <div class="news-meta">Sponsored</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Wasir');"></div>
+                <div class="news-content">
+                    <span class="news-category">adNews</span>
+                    <h2 class="news-title">Rahasia untuk Mengalahkan Wasir: Minum ini di Pagi Hari</h2>
+                    <p class="news-excerpt">Solusi praktis untuk masalah wasir yang sudah terbukti efektif.</p>
+                    <div class="news-meta">Sponsored</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ad-banner">
+            <img src="https://via.placeholder.com/1200x200/cccccc/333333?text=Iklan+Banner" alt="Iklan">
+        </div>
+        
+        <h2 class="section-title">
+            Berita Terkini
+            <a href="#">Lihat Semua</a>
+        </h2>
+        
+        <div class="news-section">
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Striker+Jepang');"></div>
+                <div class="news-content">
+                    <span class="news-category">Sepakbola</span>
+                    <h2 class="news-title">Galaknya Striker-striker Jepang di Liga Top Eropa</h2>
+                    <p class="news-excerpt">Pemain-pemain asal Jepang menunjukkan performa gemilang di liga Eropa.</p>
+                    <div class="news-meta">46 menit yang lalu</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Basket');"></div>
+                <div class="news-content">
+                    <span class="news-category">Basket</span>
+                    <h2 class="news-title">Pemain Muda Indonesia yang Bersinar di Liga Basket Asia</h2>
+                    <p class="news-excerpt">Potensi besar dari atlet muda Indonesia di kancah internasional.</p>
+                    <div class="news-meta">2 jam yang lalu</div>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-image" style="background-image: url('https://via.placeholder.com/400x300/cccccc/333333?text=Olahraga');"></div>
+                <div class="news-content">
+                    <span class="news-category">Olahraga</span>
+                    <h2 class="news-title">Persiapan Timnas Indonesia Menuju Piala Dunia</h2>
+                    <p class="news-excerpt">Jadwal latihan dan pertandingan uji coba jelang Piala Dunia.</p>
+                    <div class="news-meta">4 jam yang lalu</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <a href="#">MamiOlahraga</a>
+                <p>Portal olahraga terpercaya untuk semua kalangan</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Olahraga</h3>
+                    <ul>
+                        <li><a href="#">Sepakbola</a></li>
+                        <li><a href="#">Basket</a></li>
+                        <li><a href="#">Jadwal Pertandingan</a></li>
+                        <li><a href="#">Klasemen</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Berita</h3>
+                    <ul>
+                        <li><a href="#">Terbaru</a></li>
+                        <li><a href="#">Populer</a></li>
+                        <li><a href="#">Analisis</a></li>
+                        <li><a href="#">Wawancara</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Toko</h3>
+                    <ul>
+                        <li><a href="#">Jersey</a></li>
+                        <li><a href="#">Sepatu</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Komunitas</h3>
+                    <ul>
+                        <li><a href="#">Event</a></li>
+                        <li><a href="#">Forum Diskusi</a></li>
+                        <li><a href="#">Klub Lokal</a></li>
+                        <li><a href="#">Bergabung</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Tentang Kami</h3>
+                    <ul>
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Kontak</a></li>
+                        <li><a href="#">Karir</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MamiOlahraga. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk menandai menu aktif
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const menuItems = document.querySelectorAll('.main-menu li');
+            
+            menuItems.forEach(item => {
+                const link = item.querySelector('a');
+                if (link.getAttribute('href') === currentPage || 
+                    (currentPage === 'index.html' && link.getAttribute('href') === '#')) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

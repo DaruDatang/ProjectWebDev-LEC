@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko - MamiOlahraga</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Navbar Styles */
+        .top-navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e60000;
+        }
+        
+        .main-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .main-menu li {
+            position: relative;
+            padding: 15px 10px;
+        }
+        
+        .main-menu li a {
+            font-weight: 600;
+            color: #333;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .main-menu li a:hover {
+            color: #e60000;
+        }
+        
+        .main-menu li.active a {
+            color: #e60000;
+            border-bottom: 3px solid #e60000;
+        }
+        
+        .search-icon {
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        /* Toko Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin: 20px 0;
+            background: #fff;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .search-bar button {
+            background: #e60000;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: #c50000;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-badge {
+            background: #e60000;
+            color: white;
+            padding: 3px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+        
+        .product-image {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f9f9f9;
+        }
+        
+        .product-info {
+            padding: 10px;
+        }
+        
+        .product-title {
+            font-size: 13px;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            /* webkit-line-clamp: 2; */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+        
+        .product-meta {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            font-size: 14px;
+            font-weight: bold;
+            color: #e60000;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e60000;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-menu {
+                display: none;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="logo">MamiOlahraga</div>
+            <ul class="main-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Olahraga</a></li>
+                <li><a href="#">Sepakbola</a></li>
+                <li><a href="#">Basket</a></li>
+                <li><a href="#">Berita</a></li>
+                <li class="active"><a href="toko.html">Toko</a></li>
+                <li><a href="#">Komunitas</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+            <div class="search-icon">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Toko Content -->
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="Cari produk...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div class="products-grid">
+            <!-- Produk 1 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Sandal+Jepit');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Sandal Jepit Wanita Kucing Lucu Terbaru</div>
+                    <div class="product-meta">Termurah di Shopee • COD</div>
+                    <div class="product-price">Rp 4.050</div>
+                </div>
+            </div>
+            
+            <!-- Produk 2 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Topi+Baseball');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star TOPI BASSEBALL RING ANTING KOREA/TO...</div>
+                    <div class="product-meta">COD</div>
+                    <div class="product-price">Rp 12.500</div>
+                </div>
+            </div>
+            
+            <!-- Produk 3 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Basreng');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Basreng Pedas Daun Jeruk/ Original / Balado...</div>
+                    <div class="product-meta">Pilih Lokal • COD</div>
+                    <div class="product-price">Rp 4.999</div>
+                </div>
+            </div>
+            
+            <!-- Produk 4 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Kipas+Mini');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Kipas Angin Genggam Mini Portable...</div>
+                    <div class="product-meta">Termurah di Shopee • COD</div>
+                    <div class="product-price">Rp 12.800</div>
+                </div>
+            </div>
+            
+            <!-- Produk 5 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Topi+Pria');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Topi Pria Wanita Murah Kualitas Premium/...</div>
+                    <div class="product-meta">COD</div>
+                    <div class="product-price">Rp 15.000</div>
+                </div>
+            </div>
+            
+            <!-- Produk 6 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Jilbab+Sport');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star jilbab sport pet tebal / bergo sport pet tebal /...</div>
+                    <div class="product-meta">COD</div>
+                    <div class="product-price">Rp 11.999</div>
+                </div>
+            </div>
+            
+            <!-- Produk 7 -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Tas+Olahraga');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Tas Olahraga Multifungsi Waterproof</div>
+                    <div class="product-meta">Termurah • COD</div>
+                    <div class="product-price">Rp 89.000</div>
+                </div>
+            </div>
+            
+            <!-- Baris kedua produk -->
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Sepatu+Lari');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Sepatu Lari Pria/Wanita Running Sport</div>
+                    <div class="product-meta">COD • Gratis Ongkir</div>
+                    <div class="product-price">Rp 249.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Matras+Yoga');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Matras Yoga Premium Anti Slip 10mm</div>
+                    <div class="product-meta">Termurah • COD</div>
+                    <div class="product-price">Rp 125.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Dumbell');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Dumbell Set 10kg Adjustable</div>
+                    <div class="product-meta">COD • Bisa Cicil</div>
+                    <div class="product-price">Rp 350.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Jersey+Bola');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Jersey Sepakbola Timnas Indonesia 2023</div>
+                    <div class="product-meta">Original • COD</div>
+                    <div class="product-price">Rp 199.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Botol+Minum');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Botol Minum Sport 750ml Anti Tumpah</div>
+                    <div class="product-meta">Termurah • COD</div>
+                    <div class="product-price">Rp 45.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Tali+Skiping');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Tali Skipping Digital Counter</div>
+                    <div class="product-meta">COD • Gratis Ongkir</div>
+                    <div class="product-price">Rp 35.000</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">PROMO</div>
+                <div class="product-image" style="background-image: url('https://via.placeholder.com/200x200/cccccc/333333?text=Bandana+Sport');"></div>
+                <div class="product-info">
+                    <div class="product-title">Star Bandana Sport Anti Keringat</div>
+                    <div class="product-meta">Paket 3pcs • COD</div>
+                    <div class="product-price">Rp 27.000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">MamiOlahraga</div>
+                <p>Toko perlengkapan olahraga terlengkap dengan harga terjangkau.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Kategori</h3>
+                <ul>
+                    <li><a href="#">Sepakbola</a></li>
+                    <li><a href="#">Basket</a></li>
+                    <li><a href="#">Fitness</a></li>
+                    <li><a href="#">Lari</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Bantuan</h3>
+                <ul>
+                    <li><a href="#">Cara Belanja</a></li>
+                    <li><a href="#">Pembayaran</a></li>
+                    <li><a href="#">Pengiriman</a></li>
+                    <li><a href="#">Retur</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Kontak</h3>
+                <ul>
+                    <li><a href="#">WhatsApp</a></li>
+                    <li><a href="#">Email</a></li>
+                    <li><a href="#">Lokasi Toko</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 MamiOlahraga. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk menandai menu aktif
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const menuItems = document.querySelectorAll('.main-menu li');
+            
+            menuItems.forEach(item => {
+                const link = item.querySelector('a');
+                if (link.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

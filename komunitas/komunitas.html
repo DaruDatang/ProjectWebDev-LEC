@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komunitas - MamiOlahraga</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Navbar Styles */
+        .top-navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e60000;
+        }
+        
+        .main-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .main-menu li {
+            position: relative;
+            padding: 15px 10px;
+        }
+        
+        .main-menu li a {
+            font-weight: 600;
+            color: #333;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .main-menu li a:hover {
+            color: #e60000;
+        }
+        
+        .main-menu li.active a {
+            color: #e60000;
+            border-bottom: 3px solid #e60000;
+        }
+        
+        .search-icon {
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        /* Community Content Styles */
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 30px 0 20px;
+            color: #e60000;
+        }
+        
+        .forum-section {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .forum-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .forum-item:last-child {
+            border-bottom: none;
+        }
+        
+        .forum-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .forum-count {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .forum-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .forum-table th {
+            text-align: left;
+            padding: 10px;
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .forum-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .forum-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .forum-link {
+            font-weight: 600;
+            color: #333;
+            transition: color 0.3s;
+        }
+        
+        .forum-link:hover {
+            color: #e60000;
+        }
+        
+        .last-post {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .discussions-count {
+            color: #666;
+            text-align: right;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-link {
+            font-weight: 600;
+            color: #333;
+            transition: color 0.3s;
+        }
+        
+        .feature-link:hover {
+            color: #e60000;
+        }
+        
+        .community-stats {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .stats-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .stats-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #e60000;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e60000;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .main-menu {
+                display: none;
+            }
+            
+            .forum-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .forum-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .forum-count {
+                margin-top: 5px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="logo">MamiOlahraga</div>
+            <ul class="main-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Olahraga</a></li>
+                <li><a href="#">Sepakbola</a></li>
+                <li><a href="#">Basket</a></li>
+                <li><a href="#">Berita</a></li>
+                <li><a href="toko.html">Toko</a></li>
+                <li class="active"><a href="komunitas.html">Komunitas</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+            <div class="search-icon">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Community Content -->
+    <div class="container">
+        <h1 class="section-title">Forum Olahraga Terkini</h1>
+        
+        <div class="forum-section">
+            <div class="forum-item">
+                <div class="forum-name">Liga Indonesia 2023/2024</div>
+                <div class="forum-count">15,009 diskusi</div>
+            </div>
+            
+            <div class="forum-item">
+                <div class="forum-name">Piala Dunia U-17 Indonesia 2023</div>
+                <div class="forum-count">6,600 diskusi</div>
+            </div>
+            
+            <div class="forum-item">
+                <div class="forum-name">NBA Season 2023/2024</div>
+                <div class="forum-count">144,065 diskusi</div>
+            </div>
+            
+            <div class="forum-item">
+                <div class="forum-name">Liga Champions Eropa</div>
+                <div class="forum-count">28,474 diskusi</div>
+            </div>
+            
+            <div class="forum-item">
+                <div class="forum-name">Turnamen Bulutangkis Asia Tenggara</div>
+                <div class="forum-count">8,977 diskusi</div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Forum MamiOlahraga</h2>
+        
+        <div class="forum-section">
+            <table class="forum-table">
+                <thead>
+                    <tr>
+                        <th>FORUM</th>
+                        <th>POST TERAKHIR</th>
+                        <th>DISCUSSION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#" class="forum-link">Baru di MamiOlahraga</a></td>
+                        <td class="last-post">4 menit yang lalu</td>
+                        <td class="discussions-count">176,176</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" class="forum-link">Bantuan dan Tips</a></td>
+                        <td class="last-post">7 menit yang lalu</td>
+                        <td class="discussions-count">613,957</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" class="forum-link">Saran / Ide</a></td>
+                        <td class="last-post">4 menit yang lalu</td>
+                        <td class="discussions-count">92,944</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" class="forum-link">Diskusi Umum</a></td>
+                        <td class="last-post">Baru saja</td>
+                        <td class="discussions-count">70,661</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" class="forum-link">Olahraga Sekolah</a></td>
+                        <td class="last-post">1 jam yang lalu</td>
+                        <td class="discussions-count">16,483</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" class="forum-link">Aplikasi Mobile</a></td>
+                        <td class="last-post">7 jam yang lalu</td>
+                        <td class="discussions-count">18,964</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h2 class="section-title">FITUR MAMIOLAHARAGA</h2>
+        
+        <div class="forum-section">
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Grup Prediksi Pertandingan</a>
+                    <div class="forum-count">406,825 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Aplikasi Beta</a>
+                    <div class="forum-count">93,007 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Teknologi Olahraga</a>
+                    <div class="forum-count">36,957 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Turnamen Virtual</a>
+                    <div class="forum-count">28,710 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Semesta Olahraga</a>
+                    <div class="forum-count">15,237 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Pasar Komunitas</a>
+                    <div class="forum-count">14,413 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Olahraga Tradisional</a>
+                    <div class="forum-count">13,664 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">Siaran Langsung</a>
+                    <div class="forum-count">10,504 diskusi</div>
+                </li>
+                <li class="feature-item">
+                    <a href="#" class="feature-link">MamiOlahraga Labs</a>
+                    <div class="forum-count">7,818 diskusi</div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="community-stats">
+            <div class="stats-title">Komunitas MamiOlahraga</div>
+            <div class="stats-number">70,000</div>
+            <p>Anggota aktif</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">MamiOlahraga</div>
+                <p>Komunitas olahraga terbesar di Indonesia dengan berbagai diskusi menarik.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Forum Populer</h3>
+                <ul>
+                    <li><a href="#">Sepakbola</a></li>
+                    <li><a href="#">Basket</a></li>
+                    <li><a href="#">Bulutangkis</a></li>
+                    <li><a href="#">Olahraga Lain</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Bantuan</h3>
+                <ul>
+                    <li><a href="#">Cara Bergabung</a></li>
+                    <li><a href="#">Aturan Komunitas</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak Moderator</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Sosial Media</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 MamiOlahraga. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk menandai menu aktif
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const menuItems = document.querySelectorAll('.main-menu li');
+            
+            menuItems.forEach(item => {
+                const link = item.querySelector('a');
+                if (link.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
